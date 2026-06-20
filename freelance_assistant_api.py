@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 from datetime import datetime
 import json
@@ -25,11 +26,25 @@ class Task(BaseModel):
     task: str
 
 
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
 def home():
-    return {
-        "status": "Freelance Assistant Online"
-    }
+    return """
+    <html>
+        <head>
+            <title>Freelance Assistant</title>
+        </head>
+        <body style="font-family: Arial; padding: 40px;">
+            <h1>Freelance Assistant</h1>
+            <p>System Online ✔</p>
+
+            <h3>API</h3>
+            <ul>
+                <li>GET /tasks</li>
+                <li>POST /tasks</li>
+            </ul>
+        </body>
+    </html>
+    """
 
 
 @app.get("/tasks")
@@ -48,7 +63,4 @@ def add_task(item: Task):
 
     save_tasks(tasks)
 
-    return {
-        "status": "added",
-        "task": item.task
-    }
+    return {"status": "added", "task": item.task}
