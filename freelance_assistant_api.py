@@ -1,41 +1,54 @@
-from http.server import BaseHTTPRequestHandler, HTTPServer
-import json
+from fastapi import FastAPI
+from pydantic import BaseModel
 from datetime import datetime
+import json
+import os
 
-TASKS = []
+app = FastAPI()
 
-
-class Handler(BaseHTTPRequestHandler):
-
-    def _send(self, data, code=200):
-        self.send_response(code)
-        self.send_header("Content-type", "application/json")
-        self.end_headers()
-        self.wfile.write(json.dumps(data).encode())
-
-    def do_GET(self):
-        if self.path == "/tasks":
-            self._send(TASKS)
-        else:
-            self._send({"status": "online"})
-
-    def do_POST(self):
-        if self.path == "/tasks":
-            length = int(self.headers.get("Content-Length", 0))
-            body = self.rfile.read(length).decode()
-
-            data = json.loads(body)
-            task = data.get("task", "")
-
-            TASKS.append({
-                "task": task,
-                "created": str(datetime.now())
-            })
-
-            self._send({"status": "added", "task": task})
+TASK_FILE = "tasks.json"
 
 
-if __name__ == "__main__":
-    server = HTTPServer(("0.0.0.0", 8000), Handler)
-    print("RUNNING")
-    server.serve_forever()
+def load_tasks():
+    if os.path.exists(TASK_FILE):
+        with open(TASK_FILE, "r") as f:
+            return json.load(f)
+    return []
+
+
+def save_tasks(tasks):
+    with open(TASK_FILE, "w") as f:
+        json.dump(tasks, f, indent=2)
+
+
+class Task(BaseModel):
+    task: str
+
+
+@app.get("/")
+def home():
+    return {
+        "status": "Freelance Assistant Online"
+    }
+
+
+@app.get("/tasks")
+def get_tasks():
+    return load_tasks()
+
+
+@app.post("/tasks")
+def add_task(item: Task):
+    tasks = load_tasks()
+
+    tasks.append({
+        "task": item.task,
+        "created": str(datetime.now())
+    })
+
+    save_tasks(tasks)
+
+    return {
+        "status": "added",
+        "task": item.task
+    }
