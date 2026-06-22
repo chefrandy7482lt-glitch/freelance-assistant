@@ -1,0 +1,78 @@
+[
+  {
+    "event_id": 1,
+    "timestamp": "2026-06-22T23:09:30.087753+00:00",
+    "source_system": "freelance",
+    "event_type": "task",
+    "payload": {
+      "task": "write proposal"
+    },
+    "vector": {
+      "d1_time_density": 1,
+      "d2_velocity": 2.6,
+      "d3_repetition": 0,
+      "d4_relational": 0,
+      "d5_stability": 1.0,
+      "d6_drift": 0.0,
+      "d7_complexity": 5.2,
+      "d8_identity": 3.295836866004329
+    }
+  },
+  {
+    "event_id": 2,
+    "timestamp": "2026-06-22T23:09:30.090154+00:00",
+    "source_system": "ties",
+    "event_type": "relationship",
+    "payload": {
+      "person": "john_doe"
+    },
+    "vector": {
+      "d1_time_density": 2,
+      "d2_velocity": 2.2,
+      "d3_repetition": 0,
+      "d4_relational": 0,
+      "d5_stability": 1.0,
+      "d6_drift": 0.0,
+      "d7_complexity": 4.4,
+      "d8_identity": 3.1354942159291497
+    }
+  },
+  {
+    "event_id": 3,
+    "timestamp": "2026-06-22T23:09:30.090546+00:00",
+    "source_system": "finance",
+    "event_type": "transaction",
+    "payload": {
+      "amount": 250
+    },
+    "vector": {
+      "d1_time_density": 3,
+      "d2_velocity": 1.5,
+      "d3_repetition": 0,
+      "d4_relational": 0,
+      "d5_stability": 1.0,
+      "d6_drift": 0.0,
+      "d7_complexity": 3.0,
+      "d8_identity": 2.772588722239781
+    }
+  },
+  {
+    "event_id": 4,
+    "timestamp": "2026-06-22T23:09:30.090925+00:00",
+    "source_system": "freelance",
+    "event_type": "task",
+    "payload": {
+      "task": "client followup"
+    },
+    "vector": {
+      "d1_time_density": 4,
+      "d2_velocity": 2.7,
+      "d3_repetition": 0,
+      "d4_relational": 1,
+      "d5_stability": 1.0,
+      "d6_drift": 0.0,
+      "d7_complexity": 5.4,
+      "d8_identity": 3.367295829986474
+    }
+  }
+]
