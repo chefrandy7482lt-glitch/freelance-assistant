@@ -1,44 +1,33 @@
-"""
-TDU VALUE ENGINE
+def compute_task_value(task: str) -> float:
+    """
+    Simple value scoring function for freelance tasks.
+    Returns a numeric score based on task length and keywords.
+    """
 
-Purpose:
-- Discover value
-- Pricing engine consumes value
-- No hardcoded service prices
-"""
+    if not task or not isinstance(task, str):
+        return 0.0
 
-class TDUValueEngine:
+    # Base score from length
+    length_score = min(len(task) / 10, 10)
 
-    def evaluate(
-        self,
-        workload_score,
-        automation_score,
-        time_saved_score,
-        complexity_score,
-        market_score
-    ):
+    # Keyword multipliers
+    keywords = {
+        "write": 1.2,
+        "design": 1.3,
+        "build": 1.4,
+        "research": 1.1,
+        "analysis": 1.25,
+        "proposal": 1.3,
+        "client": 1.15,
+        "email": 1.05,
+        "report": 1.2
+    }
 
-        value = (
-            workload_score +
-            automation_score +
-            time_saved_score +
-            complexity_score +
-            market_score
-        )
+    multiplier = 1.0
+    for word, factor in keywords.items():
+        if word in task.lower():
+            multiplier *= factor
 
-        return round(value, 2)
+    score = length_score * multiplier
 
-
-if __name__ == "__main__":
-
-    engine = TDUValueEngine()
-
-    value = engine.evaluate(
-        workload_score=25,
-        automation_score=25,
-        time_saved_score=25,
-        complexity_score=25,
-        market_score=25
-    )
-
-    print("TDU VALUE:", value)
+    return round(score, 2)
