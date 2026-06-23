@@ -49,6 +49,13 @@ async def process_task(request: Request):
     }
 
 
+# Alias for older /generate frontend calls
+@app.post("/generate")
+async def generate(request: Request):
+    # Reuse the same logic as /process_task so existing UI keeps working
+    return await process_task(request)
+
+
 # ---------------------------------------------------------
 # FULL PROJECT PROPOSAL GENERATOR
 # ---------------------------------------------------------
